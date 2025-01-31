@@ -1,0 +1,9 @@
+COPY tournament."regular_season_compact_results" FROM '/data/tournament/regular_season_compact_results.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."regular_season_detailed_results" FROM '/data/tournament/regular_season_detailed_results.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."seasons" FROM '/data/tournament/seasons.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."target" FROM '/data/tournament/target.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."teams" FROM '/data/tournament/teams.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."tourney_compact_results" FROM '/data/tournament/tourney_compact_results.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."tourney_detailed_results" FROM '/data/tournament/tourney_detailed_results.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."tourney_seeds" FROM '/data/tournament/tourney_seeds.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
+COPY tournament."tourney_slots" FROM '/data/tournament/tourney_slots.csv' DELIMITER '	' QUOTE '"' ESCAPE '\' NULL 'NULL' CSV HEADER;
