@@ -20,7 +20,10 @@ class EstimatedQuery:
 class QueryEstimationCache:
     def __init__(self, model: Model, predicted_cardinalities):
         print("evaluating model on all queries... ", end="")
-        benchmarks = DataCollector.collect_benchmarks(DatabaseManager.get_all_databases(), predicted_cardinalities)
+        # benchmarks = DataCollector.collect_benchmarks(DatabaseManager.get_all_databases(), predicted_cardinalities)
+        benchmarks = DataCollector.collect_benchmarks(
+            DatabaseManager.get_databases(["tpchSf10"]), predicted_cardinalities
+        )
         self.queries: dict[str, EstimatedQuery] = {}
         for b in benchmarks:
             estimate = model.estimate_runtime(b)

@@ -28,7 +28,9 @@ def get_test_numbers(predicted_cardinalities: bool):
     benchmarks = DataCollector.collect_benchmarks(train_databases, predicted_cardinalities)
     model = optimize_per_tuple_tree_model(benchmarks)
 
-    benchmarks = DataCollector.collect_benchmarks([job_db], predicted_cardinalities, query_category=[QueryCategory.fixed])
+    benchmarks = DataCollector.collect_benchmarks(
+        [job_db], predicted_cardinalities, query_category=[QueryCategory.fixed]
+    )
     runtimes = [b.get_total_runtime() for b in benchmarks]
     estimates = [model.estimate_runtime(q) for q in benchmarks]
     q_errors = [q_error(e, r) for e, r in zip(estimates, runtimes)]

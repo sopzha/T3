@@ -22,7 +22,10 @@ def optimize_all(predicted_cardinalities: bool = False) -> Model:
         # QueryCategory.complex_select_join_agg,
         # QueryCategory.complex_select_join_simple_agg,
     ]
+    # benchmarks = DataCollector.collect_benchmarks(
+    #     DatabaseManager.get_train_databases(), predicted_cardinalities, exclude_query_category=excluded_from_train
+    # )
     benchmarks = DataCollector.collect_benchmarks(
-        DatabaseManager.get_train_databases(), predicted_cardinalities, exclude_query_category=excluded_from_train
+        DatabaseManager.get_databases(["tpchSf10"]), predicted_cardinalities, exclude_query_category=excluded_from_train
     )
     return optimize_per_tuple_tree_model(benchmarks)

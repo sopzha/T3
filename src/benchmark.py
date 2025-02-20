@@ -135,7 +135,7 @@ class Benchmarker:
             QueryCategory.complex_select_join: lambda: generate_join_query(db.schema, True, True),
             QueryCategory.complex_select_join_agg: lambda: generate_join_agg_query(db.schema, True, True),
             QueryCategory.complex_select_join_simple_agg: lambda: generate_join_simple_agg_query(db.schema, True, True),
-            QueryCategory.window: lambda: window_factory.get_query()
+            QueryCategory.window: lambda: window_factory.get_query(),
         }
 
     @staticmethod

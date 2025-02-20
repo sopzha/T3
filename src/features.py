@@ -360,7 +360,7 @@ class FeatureMapper:
                 result[f.operator_type.name][f.operator_stage.name] = {}
             result[f.operator_type.name][f.operator_stage.name][f.feature.name] = i
         result = json.dumps(result)
-        result= result.lower()
+        result = result.lower()
         print(result)
 
 
