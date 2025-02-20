@@ -9,6 +9,7 @@ from src.database import Database
 from src.metrics import q_error
 from src.optimizer import BenchmarkedQuery, QueryCategory
 from src.query_plan import QueryPlan
+from src.redshift_util import get_query_plan, get_query_runtimes
 from src.util import fifo_cache
 
 
@@ -54,6 +55,20 @@ class DataCollector:
         return BenchmarkedQuery(plan, runtimes, file.name, query_text, DataCollector.get_type(file))
 
     @staticmethod
+    def read_analyzed_plan_redshift(file: Path, db: Database, predicted_cardinalities: bool) -> BenchmarkedQuery:
+        with open(file, "r") as benchmark_json:
+            benchmark_json = json.load(benchmark_json)
+        query_text = benchmark_json["plan"]["query_text"]
+        query_plan = get_query_plan(query_text)
+
+        plan = QueryPlan(query_plan, db, predicted_cardinalities)
+        plan.build_pipelines(query_plan["analyzePlanPipelines"])
+
+        runtimes = get_query_runtimes(query_text)
+
+        return BenchmarkedQuery(plan, runtimes, file.name, query_text, DataCollector.get_type(file))
+
+    @staticmethod
     def group_by_multiple_runs(benchmarks: list[BenchmarkedQuery]) -> dict[str, list[BenchmarkedQuery]]:
         result = {}
         regex = re.compile("(.*\\d+[a-z]?)\\.json$")
@@ -85,7 +100,11 @@ class DataCollector:
         files = [f for f in Path(f"data/{db.get_path()}").rglob("*.json")]
         files.sort()
         for file in files:
-            result.append(DataCollector.read_analyzed_plan(file, db, predicted_cardinalities))
+            # result.append(DataCollector.read_analyzed_plan(file, db, predicted_cardinalities))
+            try:
+                result.append(DataCollector.read_analyzed_plan_redshift(file, db, predicted_cardinalities))
+            except Exception as e:
+                print(f"Error reading file {file}: {e}")
         return result
 
     @staticmethod
